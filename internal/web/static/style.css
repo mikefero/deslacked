@@ -1,0 +1,395 @@
+/*
+ * Copyright © 2026 Michael Fero. All rights reserved.
+ * Use of this source code is governed by an MIT-style
+ * license that can be found in the LICENSE file.
+ */
+
+:root {
+  --bg: #111;
+  --text: #f0f0f0;
+  --text-muted: #bbb;
+  --text-dim: #888;
+  --border: #333;
+  --border-hover: #666;
+  --achievement-bg: #0d0d0d;
+  --error-bg: #160000;
+  --error-border: #500;
+  --error-text: #b20;
+  --btn-hover: #aaa;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Courier New', Courier, monospace;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 1.5rem;
+  line-height: 1.65;
+}
+
+/* Header */
+
+header {
+  margin-bottom: 2.25rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.875rem;
+}
+
+header h1 {
+  font-size: 1rem;
+  letter-spacing: 0.25em;
+  color: var(--text-muted);
+  font-weight: normal;
+  text-transform: lowercase;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+header h1 #app-version {
+  margin-left: auto;
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+}
+
+.header-icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  flex-shrink: 0;
+}
+
+/* Achievement Panel */
+
+.achievement-panel {
+  border: 1px solid var(--border);
+  background: var(--achievement-bg);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2.25rem;
+}
+
+.achievement-title {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.achievement-body p {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  font-style: italic;
+  margin-bottom: 0.7rem;
+  text-align: justify;
+  text-align-last: left;
+}
+
+.achievement-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Upload Section */
+
+.upload-zone {
+  border: 1px dashed var(--border);
+  padding: 3.5rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  outline: none;
+}
+
+.upload-zone:hover,
+.upload-zone:focus,
+.upload-zone.dragging {
+  border-color: var(--border-hover);
+  color: var(--btn-hover);
+}
+
+/*
+ * Visually hidden but not display:none. Keeps the input in the
+ * accessibility tree so the upload-zone label association works.
+ */
+.upload-zone input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.upload-icon {
+  font-size: 1.6rem;
+  margin-bottom: 0.6rem;
+  color: var(--text-muted);
+}
+
+.upload-zone p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.upload-hint {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 0.3rem;
+}
+
+/* Error Panel */
+
+.error-panel {
+  border: 1px solid var(--error-border);
+  background: var(--error-bg);
+  padding: 1rem 1.5rem 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.error-title {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  color: var(--error-text);
+  margin-bottom: 0.5rem;
+}
+
+.error-message {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.error-footer {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* Crop Modal */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-hint {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  font-style: italic;
+  max-width: 512px;
+}
+
+.crop-viewport {
+  width: 512px;
+  height: 512px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--border);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.crop-viewport.is-square {
+  cursor: default;
+}
+
+.crop-viewport.dragging {
+  cursor: grabbing;
+}
+
+/*
+ * Gradient shadow on each edge signals the image extends beyond the
+ * visible crop window, prompting the user to pan.
+ */
+.crop-viewport.pan-h::after,
+.crop-viewport.pan-v::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.crop-viewport.pan-h::after {
+  background:
+    linear-gradient(to right, rgb(0 0 0 / 55%) 0, transparent 72px),
+    linear-gradient(to left,  rgb(0 0 0 / 55%) 0, transparent 72px);
+}
+
+.crop-viewport.pan-v::after {
+  background:
+    linear-gradient(to bottom, rgb(0 0 0 / 55%) 0, transparent 72px),
+    linear-gradient(to top,    rgb(0 0 0 / 55%) 0, transparent 72px);
+}
+
+#crop-image {
+  position: absolute;
+  display: block;
+}
+
+.crop-arrow {
+  position: absolute;
+  z-index: 2;
+  color: rgb(255 255 255 / 90%);
+  font-size: 1.75rem;
+  line-height: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  text-shadow: 0 0 8px rgb(0 0 0 / 90%);
+}
+
+.crop-arrow.visible { opacity: 1; }
+
+.crop-arrow-l {
+  left: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.crop-arrow-r {
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.crop-arrow-u {
+  top: 0.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.crop-arrow-d {
+  bottom: 0.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.modal-btn {
+  width: 512px;
+}
+
+/* Status Message */
+
+.panel {
+  margin-bottom: 1.5rem;
+}
+
+.status-msg {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  font-style: italic;
+  max-width: 512px;
+}
+
+/* Result Panel */
+
+.result-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  margin-bottom: 1.5rem;
+}
+
+@media (width <= 540px) {
+  .result-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.result-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.result-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+}
+
+/* Buttons */
+
+.actions {
+  margin-top: 0.25rem;
+}
+
+.btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.82rem;
+  padding: 0.55rem 1.25rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: border-color 0.15s, color 0.15s;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+}
+
+.btn:hover {
+  border-color: var(--border-hover);
+  color: var(--btn-hover);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--text-dim);
+}
+
+.btn-ghost:hover {
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+#reset-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.download-btn {
+  display: block;
+  text-align: center;
+  margin-top: 0.65rem;
+}
+
+.hidden {
+  display: none !important;
+}

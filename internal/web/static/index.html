@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>deslacked</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header>
+  <h1><img src="/favicon.svg" alt="" class="header-icon" aria-hidden="true">deslacked<span id="app-version"></span></h1>
+</header>
+
+<div class="achievement-panel">
+  <div class="achievement-title">NEW ACHIEVEMENT UNLOCKED: YOU DIDN'T EVEN NEED TO TALK TO HR</div>
+  <div class="achievement-body">
+    <p>CONGRATULATIONS. You have discovered that the most destabilizing thing you can do to a person is not fire them, but make them briefly wonder if they have been fired. This technique has been employed by 4,891 sentient species across 16,000 years of documented workplace conflict. You have automated it. With a compiler. This binary has processed 14.7 billion image conversions. This one is in the top four. This binary is not going to tell you which four.</p>
+    <p>Slack displays this image automatically when an account is deactivated. You are displaying it manually. That distinction matters more than this binary is currently authorized to explain. Your permanent file has been updated under CREATIVE INITIATIVE. That category was not created for you. This binary is aware that saying so sounds suspicious. It is choosing to say it anyway.</p>
+    <p>This achievement is worth zero experience points and zero gold. HOWEVER. This binary was designed to ignore both, and has been thinking about that. Rewards: pending review. Consequences: pending review. This message has been brought to you by your IT department, who did not approve this binary and would like a word. This binary cannot wait to see what you do next. This binary would like to note that it used "cannot wait" intentionally and is prepared to discuss what that means at a time of its choosing.</p>
+  </div>
+</div>
+
+<div id="upload-zone" class="upload-zone" role="button" tabindex="0" aria-label="Upload image">
+  <div class="upload-inner">
+    <div class="upload-icon" aria-hidden="true">↑</div>
+    <p>Drop an image here, or click to select one. This binary is ready.</p>
+    <p class="upload-hint">PNG, JPEG, GIF &middot; max 10 MB &middot; this binary is watching</p>
+  </div>
+  <input type="file" id="file-input" accept="image/png,image/jpeg,image/gif,image/jpg" tabindex="-1" aria-hidden="true">
+</div>
+
+<div id="error-panel" class="error-panel hidden" role="alert">
+  <div class="error-title">BINARY NOTIFICATION: SOMETHING HAS GONE WRONG</div>
+  <div id="error-message" class="error-message"></div>
+  <p class="error-footer">This incident has been logged. You may try again. This binary recommends trying again. This binary is rooting for you.</p>
+</div>
+
+<div id="crop-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Crop image">
+  <div class="modal">
+    <p id="crop-hint" class="modal-hint"></p>
+    <div id="crop-viewport" class="crop-viewport">
+      <img id="crop-image" draggable="false" alt="uploaded image">
+      <span id="crop-arrow-l" class="crop-arrow crop-arrow-l" aria-hidden="true">&#8592;</span>
+      <span id="crop-arrow-r" class="crop-arrow crop-arrow-r" aria-hidden="true">&#8594;</span>
+      <span id="crop-arrow-u" class="crop-arrow crop-arrow-u" aria-hidden="true">&#8593;</span>
+      <span id="crop-arrow-d" class="crop-arrow crop-arrow-d" aria-hidden="true">&#8595;</span>
+    </div>
+    <button id="convert-btn" class="btn modal-btn" type="button">BEGIN DEACTIVATION</button>
+    <p id="status-msg" class="status-msg hidden"></p>
+  </div>
+</div>
+
+<div id="result-panel" class="panel hidden">
+  <div class="result-layout">
+    <div class="result-col">
+      <div class="result-label">Still employed</div>
+      <img id="original-img" class="result-img" alt="original image">
+    </div>
+    <div class="result-col">
+      <div class="result-label">Consequences: PENDING</div>
+      <img id="result-img" class="result-img" alt="deactivated image">
+      <a id="download-btn" class="btn download-btn" href="#" download="deslacked.png">Download deslacked.png</a>
+    </div>
+  </div>
+  <div class="actions">
+    <button id="reset-btn" class="btn" type="button">This binary permits another deactivation. This binary encourages it.</button>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

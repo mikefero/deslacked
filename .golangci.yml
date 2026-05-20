@@ -1,0 +1,85 @@
+version: "2"
+
+run:
+  timeout: 10m
+
+output:
+  formats:
+    colored-line-number:
+      path: stdout
+    github-actions:
+      path: stdout
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/mikefero/deslacked
+
+linters:
+  enable:
+    - asciicheck
+    - bidichk
+    - copyloopvar
+    - decorder
+    - dogsled
+    - durationcheck
+    - errcheck
+    - exhaustive
+    - forbidigo
+    - forcetypeassert
+    - goconst
+    - gocritic
+    - godot
+    - goheader
+    - gosec
+    - govet
+    - grouper
+    - importas
+    - ineffassign
+    - lll
+    - misspell
+    - mnd
+    - nakedret
+    - nilerr
+    - nilnil
+    - nolintlint
+    - predeclared
+    - revive
+    - staticcheck
+    - unconvert
+    - unparam
+    - unused
+    - wastedassign
+    - whitespace
+  settings:
+    exhaustive:
+      default-signifies-exhaustive: true
+    goconst:
+      min-occurrences: 10
+    goheader:
+      template-path: .goheader.tmpl
+    lll:
+      line-length: 120
+    revive:
+      rules:
+        - name: unused-parameter
+          severity: warning
+          disabled: true
+
+  exclusions:
+    paths:
+      - node_modules
+    rules:
+      - path: _test\.go
+        linters:
+          - goheader
+          - goconst
+          - mnd
+          - forcetypeassert
+      - linters:
+          - gosec
+        text: integer overflow conversion

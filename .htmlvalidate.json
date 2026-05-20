@@ -1,0 +1,7 @@
+{
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "element-required-attributes": "off",
+    "prefer-native-element": "off"
+  }
+}
