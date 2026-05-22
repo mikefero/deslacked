@@ -53,6 +53,18 @@ jobs:
           git push origin HEAD:${{ github.ref_name }}
           git push origin "${VERSION}"
 
+  docker:
+    name: Docker
+    needs: validate-and-tag
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Trigger Docker workflow
+        run: gh workflow run docker.yml --repo ${{ github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   goreleaser:
     name: GoReleaser
     needs: validate-and-tag
