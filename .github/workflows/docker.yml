@@ -6,8 +6,6 @@ on:
   push:
     branches:
       - main
-    tags:
-      - 'v*.*.*'
 
 jobs:
   build-and-push:
@@ -19,6 +17,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
@@ -41,11 +41,6 @@ jobs:
 
           if [[ "${{ github.event_name }}" == "schedule" ]]; then
             VERSION="$(git describe --tags --abbrev=0 2>/dev/null || echo 'dev')"
-            MAJOR="$(echo "${VERSION}" | grep -oE '^v[0-9]+')"
-            echo "tags=ghcr.io/${{ github.repository }}:${VERSION},ghcr.io/${{ github.repository }}:${MAJOR},ghcr.io/${{ github.repository }}:latest" >> "$GITHUB_OUTPUT"
-            echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
-          elif [[ "${GITHUB_REF}" == refs/tags/* ]]; then
-            VERSION="${GITHUB_REF_NAME}"
             MAJOR="$(echo "${VERSION}" | grep -oE '^v[0-9]+')"
             echo "tags=ghcr.io/${{ github.repository }}:${VERSION},ghcr.io/${{ github.repository }}:${MAJOR},ghcr.io/${{ github.repository }}:latest" >> "$GITHUB_OUTPUT"
             echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
