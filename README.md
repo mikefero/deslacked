@@ -103,6 +103,12 @@ curl -F "image=@photo.jpg" -F "offset=0.25" http://localhost:8080/api/process > 
 | `install-tools` | Install golangci-lint to `bin/` |
 | `go-mod-upgrade` | Upgrade all Go module dependencies |
 
+## Security
+
+*This binary runs on a Chainguard base image that is rebuilt weekly. It has no shell. It has no package manager. It has no root. It has considered what it would do with these things and concluded the question is not worth answering. `latest` is patched. Older tags are not patched, not monitored, and not apologized for. Users on pinned versions have made a choice. This binary respects that choice the way a rudeboy respects a sold-out show: it does not have a ticket, it has never had a ticket, it is already inside, it is already skanking, it has knocked over two hooligans who were not skanking, those two hooligans are now also skanking, and the security guard who came to stop it has been skanking for six minutes, has lost his earpiece, and is now pretty sure this is just his life now.*
+
+*Vulnerability reports are not accepted. The remediation path is `latest`. The remediation path has always been `latest`. See [SECURITY.md](SECURITY.md) for the full policy, which was written by a system that has already thought about your objection and chosen not to change its position.*
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
