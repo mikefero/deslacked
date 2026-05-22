@@ -1,0 +1,35 @@
+version: 2
+
+builds:
+  - main: ./main.go
+    binary: deslacked
+    env:
+      - CGO_ENABLED=0
+    ldflags:
+      - -X github.com/mikefero/deslacked/internal/version.AppVersion={{ .Version }}
+      - -X github.com/mikefero/deslacked/internal/version.AppCommit={{ .Commit }}
+      - -X github.com/mikefero/deslacked/internal/version.BuildDate={{ .Date }}
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+  - formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - LICENSE
+
+checksum:
+  name_template: "{{ .ProjectName }}_{{ .Version }}_checksums.txt"
+  algorithm: sha256
+
+release:
+  prerelease: auto
+  generate_release_notes: true
